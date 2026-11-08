@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+<html lang="it">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>FILA BARBER</title>
+
+  <style>
+
+    * { box-sizing: border-box; }
+
+    body {
+
+      margin: 0;
+
+      padding: 24px 16px;
+
+      background: #0b0b0b;
+
+      color: white;
+
+      font-family: Arial, sans-serif;
+
+    }
+
+    .container {
+
+      max-width: 500px;
+
+      margin: auto;
+
+    }
+
+    header {
+
+      text-align: center;
+
+      padding: 28px 10px;
+
+      border-bottom: 1px solid #b89545;
+
+      margin-bottom: 25px;
+
+    }
+
+    h1 {
+
+      color: #d6b45d;
+
+      font-size: 38px;
+
+      letter-spacing: 3px;
+
+      margin: 8px 0;
+
+    }
+
+    .subtitle {
+
+      color: #aaa;
+
+      letter-spacing: 3px;
+
+      font-size: 12px;
+
+    }
+
+    h2 { color: #d6b45d; }
+
+    .service {
+
+      background: #181818;
+
+      border: 1px solid #393127;
+
+      border-radius: 12px;
+
+      padding: 16px;
+
+      margin: 12px 0;
+
+      display: flex;
+
+      justify-content: space-between;
+
+      gap: 10px;
+
+    }
+
+    .price { color: #d6b45d; font-weight: bold; }
+
+    label {
+
+      display: block;
+
+      margin: 16px 0 7px;
+
+      color: #d6b45d;
+
+    }
+
+    input, select {
+
+      width: 100%;
+
+      padding: 14px;
+
+      border-radius: 8px;
+
+      border: 1px solid #65532e;
+
+      background: #181818;
+
+      color: white;
+
+      font-size: 16px;
+
+    }
+
+    button {
+
+      width: 100%;
+
+      margin-top: 22px;
+
+      padding: 16px;
+
+      border: 0;
+
+      border-radius: 9px;
+
+      background: #d6b45d;
+
+      color: #111;
+
+      font-weight: bold;
+
+      font-size: 17px;
+
+    }
+
+    #message {
+
+      margin-top: 20px;
+
+      padding: 14px;
+
+      border-radius: 8px;
+
+      background: #1b1b1b;
+
+      color: #d6b45d;
+
+      display: none;
+
+    }
+
+    footer {
+
+      color: #777;
+
+      text-align: center;
+
+      margin-top: 35px;
+
+      font-size: 12px;
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="container">
+
+    <header>
+
+      <div class="subtitle">BARBER SHOP</div>
+
+      <h1>FILA BARBER</h1>
+
+      <div class="subtitle">PRENOTA IL TUO TAGLIO</div>
+
+    </header>
+
+    <h2>I NOSTRI SERVIZI</h2>
+
+    <div class="service">
+
+      <span>Taglio uomo</span>
+
+      <span class="price">20 €</span>
+
+    </div>
+
+    <div class="service">
+
+      <span>Taglio + barba</span>
+
+      <span class="price">30 €</span>
+
+    </div>
+
+    <div class="service">
+
+      <span>Barba</span>
+
+      <span class="price">12 €</span>
+
+    </div>
+
+    <h2 style="margin-top:32px">PRENOTA</h2>
+
+    <form id="booking">
+
+      <label for="name">Nome</label>
+
+      <input id="name" type="text" placeholder="Il tuo nome" required>
+
+      <label for="service">Servizio</label>
+
+      <select id="service" required>
+
+        <option value="">Scegli un servizio</option>
+
+        <option>Taglio uomo - 20 €</option>
+
+        <option>Taglio + barba - 30 €</option>
+
+        <option>Barba - 12 €</option>
+
+      </select>
+
+      <label for="date">Data</label>
+
+      <input id="date" type="date" required>
+
+      <label for="time">Orario</label>
+
+      <select id="time" required>
+
+        <option value="">Scegli un orario</option>
+
+        <option>09:00</option>
+
+        <option>09:30</option>
+
+        <option>10:00</option>
+
+        <option>10:30</option>
+
+        <option>11:00</option>
+
+        <option>11:30</option>
+
+        <option>14:00</option>
+
+        <option>14:30</option>
+
+        <option>15:00</option>
+
+        <option>15:30</option>
+
+        <option>16:00</option>
+
+        <option>16:30</option>
+
+        <option>17:00</option>
+
+        <option>17:30</option>
+
+      </select>
+
+      <button type="submit">CONFERMA PRENOTAZIONE</button>
+
+    </form>
+
+    <div id="message"></div>
+
+    <footer>
+
+      FILA BARBER · BLACK & GOLD
+
+    </footer>
+
+  </div>
+
+  <script>
+
+    const dateInput = document.getElementById("date");
+
+    const today = new Date();
+
+    const localToday = new Date(
+
+      today.getTime() - today.getTimezoneOffset() * 60000
+
+    ).toISOString().split("T")[0];
+
+    dateInput.min = localToday;
+
+    document.getElementById("booking").addEventListener("submit", function(e) {
+
+      e.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+
+      const service = document.getElementById("service").value;
+
+      const date = dateInput.value;
+
+      const time = document.getElementById("time").value;
+
+      if (date < localToday) {
+
+        alert("Scegli una data valida.");
+
+        return;
+
+      }
+
+      const message = document.getElementById("message");
+
+      message.style.display = "block";
+
+      message.textContent =
+
+        "Prenotazione dimostrativa per " + name +
+
+        " · " + service + " · " + date + " alle " + time;
+
+      this.reset();
+
+    });
+
+  </script>
+
+</body>
+
+</html>
